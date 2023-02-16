@@ -54,10 +54,13 @@ class NavItem extends StatelessWidget {
       this.hoverColor});
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      padding: EdgeInsets.all(0),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.all(0),
+        primary: Color.fromARGB(255, 26, 26, 46),
+      ),
       onPressed: onPressed,
-      hoverColor: hoverColor,
+      // hoverColor: hoverColor,
       child: ListTile(
         leading: icon,
         title: isCollapsed ? null : title,
