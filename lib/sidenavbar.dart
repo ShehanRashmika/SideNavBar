@@ -6,20 +6,23 @@ class SideBar extends StatelessWidget {
   final Color backgroundColor;
   final double sideBarWidth;
   final double sideBarCollapsedWidth;
+  final CollapseIcon collapseIcon;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisAlignment mainAxisAlignment;
   final bool isCollapsed;
   final Widget currentItem;
   final List<Widget> navItems;
-  SideBar(
-      {this.backgroundColor = Colors.blueGrey,
-      @required this.currentItem,
-      @required this.navItems,
-      @required this.isCollapsed,
-      this.crossAxisAlignment = CrossAxisAlignment.center,
-      this.mainAxisAlignment = MainAxisAlignment.start,
-      this.sideBarCollapsedWidth = 60,
-      this.sideBarWidth = 250});
+
+  SideBar({@required this.collapseIcon,
+    this.backgroundColor = Colors.blueGrey,
+    @required this.currentItem,
+    @required this.navItems,
+    @required this.isCollapsed,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.sideBarCollapsedWidth = 60,
+    this.sideBarWidth = 250});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -29,10 +32,16 @@ class SideBar extends StatelessWidget {
         Container(
           color: backgroundColor,
           width: isCollapsed ? sideBarCollapsedWidth : sideBarWidth,
-          child: Column(
-              mainAxisAlignment: mainAxisAlignment,
-              crossAxisAlignment: crossAxisAlignment,
-              children: navItems),
+          child: Column(children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: mainAxisAlignment,
+                crossAxisAlignment: crossAxisAlignment,
+                children: navItems,
+              ),
+            ),
+            collapseIcon,
+          ]),
         ),
         Expanded(child: currentItem)
       ]),
@@ -46,12 +55,13 @@ class NavItem extends StatelessWidget {
   final Widget icon;
   final bool isCollapsed;
   final Function onPressed;
-  NavItem(
-      {@required this.isCollapsed,
-      @required this.title,
-      @required this.icon,
-      this.onPressed,
-      this.hoverColor});
+
+  NavItem({@required this.isCollapsed,
+    @required this.title,
+    @required this.icon,
+    this.onPressed,
+    this.hoverColor});
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -73,11 +83,13 @@ class CollapseIcon extends StatelessWidget {
   final Widget icon;
   final Function onPressed;
   final bool isCollapsed;
-  CollapseIcon(
-      {@required this.onPressed,
-      @required this.icon,
-      @required this.isCollapsed});
+
+  CollapseIcon({@required this.onPressed,
+    @required this.icon,
+    @required this.isCollapsed});
+
   final double angle = 180 * 3.14 / 180;
+
   @override
   Widget build(BuildContext context) {
     return Transform.rotate(
